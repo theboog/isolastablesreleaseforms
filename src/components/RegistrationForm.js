@@ -45,6 +45,15 @@ class RegistrationForm extends React.Component {
       });
   };
 
+  onLoad = (data, error) => {
+    if (data) {
+      const dates = data.dates;
+      this.setState({ dates });
+    } else {
+      this.setState({ error });
+    }
+  };
+
   render() {
     const {
       firstName,
