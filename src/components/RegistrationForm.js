@@ -1,27 +1,47 @@
-import React from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import React from "react";
+import { Button, Form } from "semantic-ui-react";
+import config from "../config";
 
 class RegistrationForm extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
-    parentGuardianFirstName: '',
-    parentGuardianLastName: '',
-    email: '',
-    confirmEmail: '',
-    phone: '',
-    sessionDate: '',
-    age: '',
-    riderExperience: '',
-    emergencyContactName: '',
-    emergencyContactPhone: '',
-    insuranceCarrier: '',
-    policyNumber: '',
-  }
+    firstName: "",
+    lastName: "",
+    parentGuardianFirstName: "",
+    parentGuardianLastName: "",
+    email: "",
+    confirmEmail: "",
+    phone: "",
+    sessionDate: "",
+    age: "",
+    riderExperience: "",
+    emergencyContactName: "",
+    emergencyContactPhone: "",
+    insuranceCarrier: "",
+    policyNumber: ""
+  };
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  componentDidMount() {
+    // 1. Load the JavaScript client library.
+    window.gapi.load("client", this.initClient);
+  }
+
+  initClient = () => {
+    // 2. Initialize the JavaScript client library.
+    window.gapi.client
+      .init({
+        apiKey: config.apiKey,
+        // Your API key will be automatically added to the Discovery Document URLs.
+        discoveryDocs: config.discoveryDocs
+      })
+      .then(() => {
+        // 3. Initialize and make the API request.
+        load(this.onLoad);
+      });
   };
 
   render() {
@@ -40,7 +60,7 @@ class RegistrationForm extends React.Component {
       emergencyContactPhone,
       insuranceCarrier,
       policyNumber
-    } = this.state
+    } = this.state;
 
     return (
       <>
@@ -82,8 +102,8 @@ class RegistrationForm extends React.Component {
           value={sessionDate}
         />
       </>
-    )
+    );
   }
 }
 
-export default RegistrationForm
+export default RegistrationForm;
