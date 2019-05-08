@@ -1,41 +1,85 @@
 import React from 'react'
-import {Button, Form} from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
-class RegistrationForm extends React.Component{
-  state={firstName: '', lastName: '', parentGuardianName:}
+class RegistrationForm extends React.Component {
+  state = {
+    firstName: '',
+    lastName: '',
+    parentGuardianFirstName: '',
+    parentGuardianLastName: '',
+    email: '',
+    confirmEmail: '',
+    phone: '',
+    sessionDate: '',
+    age: '',
+    riderExperience: '',
+    emergencyContactName: '',
+    emergencyContactPhone: '',
+    insuranceCarrier: '',
+    policyNumber: '',
+  }
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
 
   render() {
-    return(
+    const {
+      firstName,
+      lastName,
+      parentGuardianFirstName,
+      parengGuardianLastName,
+      email,
+      confirmEmail,
+      phone,
+      sessionDate,
+      age,
+      riderExperience,
+      emergencyContactName,
+      emergencyContactPhone,
+      insuranceCarrier,
+      policyNumber
+    } = this.state
+
+    return (
       <>
-       <Form.Input
-          label="Date"
-          name="startMonthDay"
-          placeholder="MM/DD"
+        <Form.Input
+          label="Camper's Name"
+          name="firstName"
+          placeholder="First"
           onChange={this.handleChange}
-          value={this.state.startMonthDay}
+          value={firstName}
         />
         <Form.Input
-          maxLength="4"
-          label="Year"
-          name="year"
-          placeholder="YYYY"
+          name="lastName"
+          placeholder="Last"
           onChange={this.handleChange}
-          value={this.state.year}
+          value={lastName}
         />
         <Form.Input
-          maxLength="8"
-          label="Start Time"
-          name="startHourMinute"
-          placeholder="HH:mm am"
+          label="E-mail"
+          name="email"
           onChange={this.handleChange}
-          value={this.state.startHourMinute}
+          value={email}
         />
         <Form.Input
-          label="End Time"
-          name="endHourMinute"
-          placeholder="HH:mm pm"
+          label="Confirm E-mail"
+          name="confirmEmail"
           onChange={this.handleChange}
-          value={this.state.endHourMinute}
+          value={confirmEmail}
+        />
+        <Form.Input
+          label="Phone Number"
+          name="phone"
+          onChange={this.handleChange}
+          value={phone}
+        />
+        <Form.Input
+          label="Choose session you would like to attend"
+          name="sessionDate"
+          onChange={this.handleChange}
+          value={sessionDate}
         />
       </>
     )
