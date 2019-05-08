@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form } from "semantic-ui-react";
 import config from "../config";
-import load from "../helpers/spreadsheet.js";
+import { load } from "../helpers/spreadsheet.js";
 
 class RegistrationForm extends React.Component {
   state = {
