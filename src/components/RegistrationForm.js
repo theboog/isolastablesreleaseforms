@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Select } from "semantic-ui-react";
 import config from "../config";
 import { load } from "../helpers/spreadsheet.js";
 
@@ -18,7 +18,10 @@ class RegistrationForm extends React.Component {
     emergencyContactName: "",
     emergencyContactPhone: "",
     insuranceCarrier: "",
-    policyNumber: ""
+    policyNumber: "",
+    dates: [],
+    riderExperienceOptions: ['Beginner', 'Intermediate', 'Advanced']
+
   };
 
   handleChange = e => {
@@ -59,7 +62,7 @@ class RegistrationForm extends React.Component {
       firstName,
       lastName,
       parentGuardianFirstName,
-      parengGuardianLastName,
+      parentGuardianLastName,
       email,
       confirmEmail,
       phone,
@@ -69,48 +72,115 @@ class RegistrationForm extends React.Component {
       emergencyContactName,
       emergencyContactPhone,
       insuranceCarrier,
-      policyNumber
+      riderExperienceOptions,
+      policyNumber,
+      dates,
     } = this.state;
+
+    const sessionOptions = dates.map(date => ({
+      key: date,
+      text: date,
+      value: date,
+    }))
+    const riderOptions = riderExperienceOptions.map(experience => ({
+      key: experience,
+      text: experience,
+      value: experience,
+    }))
 
     return (
       <>
-        <Form.Input
-          label="Camper's Name"
-          name="firstName"
-          placeholder="First"
-          onChange={this.handleChange}
-          value={firstName}
-        />
-        <Form.Input
-          name="lastName"
-          placeholder="Last"
-          onChange={this.handleChange}
-          value={lastName}
-        />
-        <Form.Input
-          label="E-mail"
-          name="email"
-          onChange={this.handleChange}
-          value={email}
-        />
-        <Form.Input
-          label="Confirm E-mail"
-          name="confirmEmail"
-          onChange={this.handleChange}
-          value={confirmEmail}
-        />
-        <Form.Input
-          label="Phone Number"
-          name="phone"
-          onChange={this.handleChange}
-          value={phone}
-        />
-        <Form.Input
-          label="Choose session you would like to attend"
-          name="sessionDate"
-          onChange={this.handleChange}
-          value={sessionDate}
-        />
+        <Form>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              label="Camper's Name"
+              name="firstName"
+              placeholder="First"
+              onChange={this.handleChange}
+              value={firstName}
+              required
+            />
+            <Form.Input
+              label=""
+              name="lastName"
+              placeholder="Last"
+              onChange={this.handleChange}
+              value={lastName}
+              required
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              label="Parent/Guardian Name"
+              name="parentGuardianFirstName"
+              placeholder="First"
+              onChange={this.handleChange}
+              value={parentGuardianFirstName}
+            />
+            <Form.Input
+              label=""
+              name="parentGuardianLastName"
+              placeholder="Last"
+              onChange={this.handleChange}
+              value={parentGuardianLastName}
+              required
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              label="E-mail"
+              name="email"
+              onChange={this.handleChange}
+              value={email}
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              label="Confirm E-mail"
+              name="confirmEmail"
+              onChange={this.handleChange}
+              value={confirmEmail}
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              label="Phone Number"
+              name="phone"
+              onChange={this.handleChange}
+              value={phone}
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Select
+              label="Choose a session You would like to attend"
+              value={sessionDate}
+              onChange={this.handleChange}
+              options={
+                sessionOptions
+              }
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Form.Input
+              maxLength="3"
+              label="Age"
+              name="age"
+              onChange={this.handleChange}
+              value={age}
+            />
+          </div>
+          <div style={{ width: '150px', display: 'flex', padding: '5px' }}>
+            <Select
+              label="Rider Experience"
+              value={riderExperience}
+              onChange={this.handleChange}
+              options={
+                riderOptions
+              }
+            />
+          </div>
+        </Form>
+
       </>
     );
   }
