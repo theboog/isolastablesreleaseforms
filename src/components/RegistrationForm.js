@@ -20,14 +20,8 @@ class RegistrationForm extends React.Component {
     emergencyContactPhone: "",
     insuranceCarrier: "",
     policyNumber: "",
-    dates: ['option1', 'option2', 'option3', 'option4'],
-    addressStreet: '',
-    addressStreet2: '',
-    addressCity: '',
-    addressState: '',
-    addressZip: '',
-    riderExperienceOptions: ['Beginner', 'Intermediate', 'Advanced']
-
+    dates: [],
+    riderExperienceOptions: ["Beginner", "Intermediate", "Advanced"]
   };
 
   handleChange = e => {
@@ -71,6 +65,40 @@ class RegistrationForm extends React.Component {
     }
   };
 
+  onSubmit = () => {
+    var params = {
+      // The ID of the spreadsheet to update.
+      spreadsheetId: config.spreadsheetId,
+
+      // The A1 notation of a range to search for a logical table of data.
+      // Values will be appended after the last row of the table.
+      range: "Sheet1!A31:A50",
+
+      // How the input data should be interpreted.
+      valueInputOption: "USER_ENTERED",
+
+      // How the input data should be inserted.
+      insertDataOption: "INSERT_ROWS"
+    };
+
+    var valueRangeBody = {
+      number: "1234"
+    };
+
+    var request = window.gapi.client.sheets.spreadsheets.values.append(
+      params,
+      valueRangeBody
+    );
+    request.then(
+      function(res) {
+        console.log(res);
+      },
+      function(reason) {
+        console.error("error: " + reason.result.error.message);
+      }
+    );
+  };
+
   render() {
     const {
       firstName,
@@ -86,262 +114,109 @@ class RegistrationForm extends React.Component {
       insuranceCarrier,
       riderExperienceOptions,
       policyNumber,
-      dates,
-      addressStreet,
-      addressStreet2,
-      addressCity,
-      addressState,
-      addressZip
-
+      dates
     } = this.state;
 
     const sessionOptions = dates.map(date => ({
-      label: date,
-      value: date,
-
-    }))
+      key: date,
+      text: date,
+      value: date
+    }));
     const riderOptions = riderExperienceOptions.map(experience => ({
-      label: experience,
-      value: experience,
-    }))
+      key: experience,
+      text: experience,
+      value: experience
+    }));
 
     return (
       <>
-        <Container style={{
-          backgroundColor: '#cdd0ad',
-          minHeight: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          width: '60%',
-        }}>
-          < Form >
-            <div
-              style={{
-                fontFamily: "georgia, palatino",
-                paddingTop: '15px',
-                textAlign: 'center',
-                fontSize: '20pt',
-                fontWeight: 'bold'
-              }}>
-              ISOLA RIDING ACADEMY</div>
-            <div style={{
-              fontFamily: "georgia, palatino",
-              textAlign: 'center',
-              fontSize: '20pt',
-              fontWeight: 'bold',
-              paddingTop: '10px'
-            }}>
-              DAY CAMP
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  label="Camper's Name"
-                  name="firstName"
-                  placeholder="First"
-                  onChange={this.handleChange}
-                  value={firstName}
-                  required
-                  stackable
-                />
-              </span>
-              <span style={{ width: '50%', paddingLeft: '15px', paddingTop: '23px' }}>
-                <Form.Input
-                  name="lastName"
-                  placeholder="Last"
-                  onChange={this.handleChange}
-                  value={lastName}
-                  required
-                  stackable
-                />
-              </span>
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  label="Parent/Guardian Name"
-                  name="parentGuardianFirstName"
-                  placeholder="First"
-                  onChange={this.handleChange}
-                  value={parentGuardianFirstName}
-                />
-              </span>
-              <span style={{ width: '50%', paddingLeft: '15px', paddingTop: '23px' }}>
-                <Form.Input
-                  name="parentGuardianLastName"
-                  placeholder="Last"
-                  onChange={this.handleChange}
-                  value={parentGuardianLastName}
-                  required
-                />
-              </span>
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  label="E-mail"
-                  name="email"
-                  onChange={this.handleChange}
-                  value={email}
-                />
-              </span>
-              <span style={{ width: '50%', paddingLeft: '15px' }}>
-                <Form.Input
-                  label="Confirm E-mail"
-                  name="confirmEmail"
-                  onChange={this.handleChange}
-                  value={confirmEmail}
-                />
-              </span>
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '100%' }}>
-                <Form.Input
-                  maxLength="12"
-                  placeholder='xxx-xxx-xxxx'
-                  label="Phone Number"
-                  name="phone"
-                  onChange={this.handleChange}
-                  value={phone}
-                />
-              </span>
-            </div>
-            <div style={{ width: '100%', paddingBottom: '10px', paddingTop: '10px' }}>
-              <Form.Input
-                placeholder='Address Line 1'
-                label="Address"
-                name="addressStreet"
-                onChange={this.handleChange}
-                value={addressStreet}
-              />
-            </div>
-            <div style={{ width: '100%' }}>
-              <Form.Input
-                placeholder='Address Line 2'
-                name="addressStreet2"
-                onChange={this.handleChange}
-                value={addressStreet2}
-              />
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: "40%", paddingRight: '5px' }}>
-                <Form.Input
-                  placeholder='City'
-                  name="addressCity"
-                  onChange={this.handleChange}
-                  value={addressCity}
-                />
-              </span>
-              <span style={{ width: "20%", paddingRight: '5px' }}>
-                <Form.Input
-                  placeholder='State'
-                  name="addressState"
-                  onChange={this.handleChange}
-                  value={addressState}
-                />
-              </span>
-              <span style={{ width: "40%" }}>
-                <Form.Input
-                  placeholder='Postal/Zip Code'
-                  name="addressZip"
-                  onChange={this.handleChange}
-                  value={addressZip}
-                />
-              </span>
-            </div>
-            <div
-              style={{
-                fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
-                fontWeight: 'bold',
-                paddingTop: '5px',
-                fontSize: '0.9em'
-              }}>
-              Choose a session(s) you would like to attend
-              </div>
-            <div style={{ width: '100%', paddingTop: '10px' }}>
-              <Select
-                onChange={this.handleChange1}
-                options={
-                  sessionOptions
-                }
-                isMulti
-                closeMenuOnSelect={false}
-              />
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '100%' }}>
-                <Form.Input
-                  maxLength="3"
-                  label="Age"
-                  name="age"
-                  onChange={this.handleChange}
-                  value={age}
-                />
-              </span>
-            </div>
-            <div
-              style={{
-                fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
-                fontWeight: 'bold',
-                paddingTop: '5px',
-                fontSize: '0.9em'
-              }}>
-              Rider Experience
-              </div>
-            <div style={{ width: '100%', paddingTop: '10px' }}>
-              <Select
-                onChange={this.handleChange2}
-                options={
-                  riderOptions
-                }
-                defaultValue={riderExperienceOptions[0]}
-              />
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  style={{ paddingRight: '20px' }}
-                  placeholder='First and Last Name'
-                  label="Emergency Contact Name"
-                  name="emergencyContactName"
-                  onChange={this.handleChange}
-                  value={emergencyContactName}
-                />
-              </span>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  maxLength="12"
-                  placeholder='xxx-xxx-xxxx'
-
-                  label="Emergency Contact Number"
-                  name="emergencyContactPhone"
-                  onChange={this.handleChange}
-                  value={emergencyContactPhone}
-                />
-              </span>
-            </div>
-            <div style={styles.row}>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  style={{ paddingRight: '20px' }}
-                  label="Insurance Carrier"
-                  name="insuranceCarrier"
-                  onChange={this.handleChange}
-                  value={insuranceCarrier}
-                />
-              </span>
-              <span style={{ width: '50%' }}>
-                <Form.Input
-                  label="Policy Number"
-                  name="policyNumber"
-                  onChange={this.handleChange}
-                  value={policyNumber}
-                />
-              </span>
-            </div>
-            <Button style={{ marginBottom: '10px', marginTop: '10px' }} floated='right'>Next</Button>
-          </Form>
-        </Container>
+        <Form>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              label="Camper's Name"
+              name="firstName"
+              placeholder="First"
+              onChange={this.handleChange}
+              value={firstName}
+              required
+            />
+            <Form.Input
+              label=""
+              name="lastName"
+              placeholder="Last"
+              onChange={this.handleChange}
+              value={lastName}
+              required
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              label="Parent/Guardian Name"
+              name="parentGuardianFirstName"
+              placeholder="First"
+              onChange={this.handleChange}
+              value={parentGuardianFirstName}
+            />
+            <Form.Input
+              label=""
+              name="parentGuardianLastName"
+              placeholder="Last"
+              onChange={this.handleChange}
+              value={parentGuardianLastName}
+              required
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              label="E-mail"
+              name="email"
+              onChange={this.handleChange}
+              value={email}
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              label="Confirm E-mail"
+              name="confirmEmail"
+              onChange={this.handleChange}
+              value={confirmEmail}
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              label="Phone Number"
+              name="phone"
+              onChange={this.handleChange}
+              value={phone}
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Select
+              label="Choose a session You would like to attend"
+              value={sessionDate}
+              onChange={this.handleChange}
+              options={sessionOptions}
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Form.Input
+              maxLength="3"
+              label="Age"
+              name="age"
+              onChange={this.handleChange}
+              value={age}
+            />
+          </div>
+          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+            <Select
+              label="Rider Experience"
+              value={riderExperience}
+              onChange={this.handleChange}
+              options={riderOptions}
+            />
+            <button onClick={() => this.onSubmit()}>make api call</button>
+          </div>
+        </Form>
       </>
     );
   }
@@ -354,7 +229,6 @@ const styles = {
     width: "100%",
     display: "flex",
     alignItems: "center",
-    paddingTop: "10px",
-  },
-
+    paddingTop: "10px"
+  }
 };
