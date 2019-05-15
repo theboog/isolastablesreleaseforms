@@ -108,32 +108,47 @@ class RegistrationForm extends React.Component {
       email,
       confirmEmail,
       phone,
+      addressLine1,
+      addressLine2,
+      city,
+      state,
+      zip,
       age,
       emergencyContactName,
       emergencyContactPhone,
       insuranceCarrier,
       riderExperienceOptions,
       policyNumber,
-      dates
+      dates,
+      sessionDate,
+      riderExperience
     } = this.state;
 
     const sessionOptions = dates.map(date => ({
-      key: date,
-      text: date,
+      label: date,
       value: date
     }));
     const riderOptions = riderExperienceOptions.map(experience => ({
-      key: experience,
-      text: experience,
+      label: experience,
       value: experience
     }));
 
     return (
-      <>
+      <div
+        style={{
+          background: "white",
+          minHeight: "100vh",
+          textAlign: "center",
+          padding: "20px",
+          maxWidth: "700px",
+          background: "#cdd0ad"
+        }}
+      >
+        <h1>Isola Riding Academy Day Camp</h1>
         <Form>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+          <Form.Group widths="equal">
             <Form.Input
-              label="Camper's Name"
+              label="Rider's Name"
               name="firstName"
               placeholder="First"
               onChange={this.handleChange}
@@ -148,8 +163,8 @@ class RegistrationForm extends React.Component {
               value={lastName}
               required
             />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+          </Form.Group>
+          <Form.Group widths="equal">
             <Form.Input
               label="Parent/Guardian Name"
               name="parentGuardianFirstName"
@@ -165,70 +180,114 @@ class RegistrationForm extends React.Component {
               value={parentGuardianLastName}
               required
             />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
+          </Form.Group>
+          <Form.Input
+            label="email"
+            name="email"
+            onChange={this.handleChange}
+            value={email}
+            placeholder="email"
+          />
+          <Form.Input
+            label="Confirm email"
+            name="confirmEmail"
+            onChange={this.handleChange}
+            value={confirmEmail}
+            placeholder="Confirm email"
+          />
+          <Form.Input
+            label="Phone Number"
+            name="phone"
+            onChange={this.handleChange}
+            value={phone}
+            placeholder="Phone Number"
+          />
+          <Form.Input
+            label="Address"
+            name="addressLine1"
+            onChange={this.handleChange}
+            value={addressLine1}
+            placeholder="Address Line 1"
+          />
+          <Form.Input
+            name="addressLine2"
+            onChange={this.handleChange}
+            value={addressLine2}
+            placeholder="Address Line 2"
+          />
+          <Form.Group>
             <Form.Input
-              label="E-mail"
-              name="email"
+              name="city"
               onChange={this.handleChange}
-              value={email}
+              value={city}
+              placeholder="city"
             />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
             <Form.Input
-              label="Confirm E-mail"
-              name="confirmEmail"
+              name="state"
               onChange={this.handleChange}
-              value={confirmEmail}
+              value={state}
+              placeholder="state"
             />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
             <Form.Input
-              label="Phone Number"
-              name="phone"
+              name="zip"
               onChange={this.handleChange}
-              value={phone}
+              value={zip}
+              placeholder="zip"
             />
+          </Form.Group>
+          <hr />
+          <div style={{ fontWeight: "bold" }}>
+            Choose session(s) you would like to attend
           </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
-            <Select
-              label="Choose a session You would like to attend"
-              value={sessionDate}
-              onChange={this.handleChange}
-              options={sessionOptions}
-            />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
-            <Form.Input
-              maxLength="3"
-              label="Age"
-              name="age"
-              onChange={this.handleChange}
-              value={age}
-            />
-          </div>
-          <div style={{ width: "150px", display: "flex", padding: "5px" }}>
-            <Select
-              label="Rider Experience"
-              value={riderExperience}
-              onChange={this.handleChange}
-              options={riderOptions}
-            />
-            <button onClick={() => this.onSubmit()}>make api call</button>
-          </div>
+          <Select options={sessionOptions} isMulti closeMenuOnSelect={false} />
+          <Form.Input
+            maxLength="3"
+            label="Age"
+            name="age"
+            onChange={this.handleChange}
+            value={age}
+            placeholder="Age"
+          />
+          <div style={{ fontWeight: "bold" }}>Rider Experience Level</div>
+          <Select options={riderOptions} defaultValue={riderOptions[0]} />
+          <br />
+          <hr />
+          <Form.Input
+            label="Emergency Contact Name"
+            name="emergencyContactname"
+            onChange={this.handleChange}
+            value={emergencyContactName}
+            placeholder="Emergency Contact Name"
+          />
+          <Form.Input
+            label="Emergency Contact Phone Number"
+            name="emergencyContactPhone"
+            onChange={this.handleChange}
+            value={emergencyContactPhone}
+            placeholder="Emergency Contact Phone Number"
+          />
+          <Form.Input
+            label="Insurance Carrier"
+            name="insuranceCarrier"
+            onChange={this.handleChange}
+            value={insuranceCarrier}
+            placeholder="Insurance Carrier"
+          />
+          <Form.Input
+            label="Policy Number"
+            name="policyNumber"
+            onChange={this.handleChange}
+            value={policyNumber}
+            placeholder="Policy Number"
+          />
+          <hr />
+          <Button onClick={() => this.onSubmit()}>make api call</Button>
         </Form>
-      </>
+      </div>
     );
   }
 }
 
 export default RegistrationForm;
 
-const styles = {
-  row: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    paddingTop: "10px"
-  }
-};
+const styles = {};
