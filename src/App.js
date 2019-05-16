@@ -13,7 +13,8 @@ function App() {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          backgroundAttachment: "fixed"
         }}
       >
         <br />

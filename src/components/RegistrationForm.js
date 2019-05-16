@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Form, Container } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 import config from "../config";
 import { load } from "../helpers/spreadsheet.js";
 import Select from "react-select";
+import moment from "moment";
 
 class RegistrationForm extends React.Component {
   state = {
@@ -13,9 +14,9 @@ class RegistrationForm extends React.Component {
     email: "",
     confirmEmail: "",
     phone: "",
-    sessionDate: "",
+    sessions: [],
     age: "",
-    riderExperience: "",
+    riderExperienceLevel: { label: "Beginner", value: "Beginner" },
     emergencyContactName: "",
     emergencyContactPhone: "",
     insuranceCarrier: "",
@@ -66,37 +67,47 @@ class RegistrationForm extends React.Component {
   };
 
   onSubmit = () => {
-    var params = {
-      // The ID of the spreadsheet to update.
-      spreadsheetId: config.spreadsheetId,
-
-      // The A1 notation of a range to search for a logical table of data.
-      // Values will be appended after the last row of the table.
-      range: "Sheet1!A31:A50",
-
-      // How the input data should be interpreted.
-      valueInputOption: "USER_ENTERED",
-
-      // How the input data should be inserted.
-      insertDataOption: "INSERT_ROWS"
-    };
-
-    var valueRangeBody = {
-      number: "1234"
-    };
-
-    var request = window.gapi.client.sheets.spreadsheets.values.append(
-      params,
-      valueRangeBody
+    let data = new FormData();
+    data.append("Rider's First Name", this.state.firstName);
+    data.append("Rider's Last Name", this.state.lastName);
+    data.append(
+      "Parent/Guardian First Name",
+      this.state.parentGuardianFirstName
     );
-    request.then(
-      function(res) {
-        console.log(res);
-      },
-      function(reason) {
-        console.error("error: " + reason.result.error.message);
-      }
+    data.append("Parent/Guardian Last Name", this.state.parentGuardianLastName);
+    data.append("email", this.state.email);
+    data.append("Phone Number", this.state.phone);
+    data.append("Address Line 1", this.state.addressLine1);
+    data.append("Address Line 2", this.state.addressLine2);
+    data.append("city", this.state.city);
+    data.append("state", this.state.state);
+    data.append("zip", this.state.zip);
+    const sessionsString = this.state.sessions.map(s => s.value).join("/");
+    data.append("Sessions", sessionsString);
+    data.append("Age", this.state.age);
+    data.append(
+      "Rider Experience Level",
+      this.state.riderExperienceLevel.value
     );
+    data.append("Emergency Contact Name", this.state.emergencyContactName);
+    data.append("Emergency Contact Number", this.state.emergencyContactPhone);
+    data.append("Insurance Carrier", this.state.insuranceCarrier);
+    data.append("Policy Number", this.state.policyNumber);
+    data.append("Date/Time Form Submitted", moment());
+
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbxPNuNc7xHH0_WGXzMFDUvKWXsZp2zrF-_YEYjZu_e0g3sAsAyR/exec";
+    fetch(scriptURL, { method: "POST", body: data })
+      .then(response => {
+        alert("Submit Successful!", response);
+        console.log("success");
+        //TODO:  redirect to previous page
+      })
+      .catch(error => alert("Error on Submit!", error.message));
+  };
+
+  cancel = () => {
+    //TODO:  redirect to previous page
   };
 
   render() {
@@ -120,8 +131,8 @@ class RegistrationForm extends React.Component {
       riderExperienceOptions,
       policyNumber,
       dates,
-      sessionDate,
-      riderExperience
+      sessions,
+      riderExperienceLevel
     } = this.state;
 
     const sessionOptions = dates.map(date => ({
@@ -136,10 +147,13 @@ class RegistrationForm extends React.Component {
     return (
       <div
         style={{
-          background: "white",
+          borderRadius: "5px",
+          marginTop: "50px",
+          marginBottom: "50px",
           minHeight: "100vh",
           textAlign: "center",
           padding: "20px",
+          width: "700px",
           maxWidth: "700px",
           background: "#cdd0ad"
         }}
@@ -215,7 +229,7 @@ class RegistrationForm extends React.Component {
             value={addressLine2}
             placeholder="Address Line 2"
           />
-          <Form.Group>
+          <Form.Group widths="equal">
             <Form.Input
               name="city"
               onChange={this.handleChange}
@@ -239,7 +253,13 @@ class RegistrationForm extends React.Component {
           <div style={{ fontWeight: "bold" }}>
             Choose session(s) you would like to attend
           </div>
-          <Select options={sessionOptions} isMulti closeMenuOnSelect={false} />
+          <Select
+            options={sessionOptions}
+            isMulti
+            closeMenuOnSelect={false}
+            value={sessions}
+            onChange={selected => this.setState({ sessions: selected })}
+          />
           <Form.Input
             maxLength="3"
             label="Age"
@@ -249,12 +269,19 @@ class RegistrationForm extends React.Component {
             placeholder="Age"
           />
           <div style={{ fontWeight: "bold" }}>Rider Experience Level</div>
-          <Select options={riderOptions} defaultValue={riderOptions[0]} />
+          <Select
+            options={riderOptions}
+            defaultValue={riderOptions[0]}
+            value={riderExperienceLevel}
+            onChange={selected =>
+              this.setState({ riderExperienceLevel: selected })
+            }
+          />
           <br />
           <hr />
           <Form.Input
             label="Emergency Contact Name"
-            name="emergencyContactname"
+            name="emergencyContactName"
             onChange={this.handleChange}
             value={emergencyContactName}
             placeholder="Emergency Contact Name"
@@ -281,7 +308,16 @@ class RegistrationForm extends React.Component {
             placeholder="Policy Number"
           />
           <hr />
-          <Button onClick={() => this.onSubmit()}>make api call</Button>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end"
+            }}
+          >
+            <Button onClick={() => this.cancel()}>Cancel</Button>
+            <Button onClick={() => this.onSubmit()}>Submit</Button>
+          </div>
         </Form>
       </div>
     );
