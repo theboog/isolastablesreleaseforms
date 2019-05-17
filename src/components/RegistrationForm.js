@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Modal } from "semantic-ui-react";
 import config from "../config";
 import { load } from "../helpers/spreadsheet.js";
 import Select from "react-select";
 import moment from "moment";
+import ReleaseModal from "./ReleaseModal";
 
 class RegistrationForm extends React.Component {
   state = {
@@ -22,7 +23,8 @@ class RegistrationForm extends React.Component {
     insuranceCarrier: "",
     policyNumber: "",
     dates: [],
-    riderExperienceOptions: ["Beginner", "Intermediate", "Advanced"]
+    riderExperienceOptions: ["Beginner", "Intermediate", "Advanced"],
+    releaseModalOpen: false
   };
 
   handleChange = e => {
@@ -66,7 +68,8 @@ class RegistrationForm extends React.Component {
     }
   };
 
-  onSubmit = () => {
+  onSubmit = releaseInfo => {
+    const releaseInfoToString = JSON.stringify(releaseInfo);
     let data = new FormData();
     data.append("Rider's First Name", this.state.firstName);
     data.append("Rider's Last Name", this.state.lastName);
@@ -94,6 +97,7 @@ class RegistrationForm extends React.Component {
     data.append("Insurance Carrier", this.state.insuranceCarrier);
     data.append("Policy Number", this.state.policyNumber);
     data.append("Date/Time Form Submitted", moment());
+    data.append("Release Information", releaseInfoToString);
 
     const scriptURL =
       "https://script.google.com/macros/s/AKfycbxPNuNc7xHH0_WGXzMFDUvKWXsZp2zrF-_YEYjZu_e0g3sAsAyR/exec";
@@ -108,6 +112,13 @@ class RegistrationForm extends React.Component {
 
   cancel = () => {
     //TODO:  redirect to previous page
+  };
+
+  handleOpen = () => {
+    this.setState({ releaseModalOpen: true });
+  };
+  handleClose = () => {
+    this.setState({ releaseModalOpen: false });
   };
 
   render() {
@@ -316,9 +327,19 @@ class RegistrationForm extends React.Component {
             }}
           >
             <Button onClick={() => this.cancel()}>Cancel</Button>
-            <Button onClick={() => this.onSubmit()}>Submit</Button>
+
+            <Button onClick={() => this.handleOpen()}>Next</Button>
           </div>
         </Form>
+        <Modal
+          open={this.state.releaseModalOpen}
+          onClose={() => this.handleClose()}
+        >
+          <ReleaseModal
+            handleClose={this.handleClose}
+            onSubmit={this.onSubmit}
+          />
+        </Modal>
       </div>
     );
   }
