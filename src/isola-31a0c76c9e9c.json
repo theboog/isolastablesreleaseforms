@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "isola-240018",
+  "private_key_id": "31a0c76c9e9c7298377f68170044321e83196ca8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDI86atGCRuPFMa\nCqd8YAsHGOavqzdF25jVod3x3dHpjLbQ6LvCnrf+Ez2fEEWFzSJNi9ymezHhvtrT\nt2h/6X5iOGBWTwLoQ1VX7eMBOeYaBpHoupr3ejRSR4CK/Usp/mX3/QYF2GTmiZ4O\nnvO3g0Dfo6Jmql4viPCAJ6XSTy0kYhgK4wl8H0giUKKY2k4iOzZejW8cL6Rgvg04\n2yDVnvdpBcNO3jbn7Llgm2u8DbXAU0rQmHmtMrspcbnv4KfF9qbF2s2PJhOPicmG\nxaKaZ55u+pwWlY3xGjVZCYdtG8Y02TBJQugakR2HdObOOGtuYA0VwTSvieE7xd12\njUG1ssaBAgMBAAECggEANjIYMri/IofcdbqH3zBb6QcbOCd6GboW5w7nt9J2SYGs\n0HzkHqIFx11TEjImPebMKJPe53t0QYjipZTidxT3A/BmcwCOLSvzuWor/emqmDxL\nX7PsFXB86e/kyBd2DRZSU+aGmE77L33QBetymXypo2cTZpLuIe3Rxw5qV2UJLLVZ\nTT6v/tYRCpC+8cRPMYG+u1CzY/OTbxPmNknQfoMRUqE3W56OmxyJ5P+E8tKWkv14\nucvedteLidMZgJAuFFDJiJE5uaubkS7hexSatIOSoX2n/dIyqtQH+VEPy+bchlQB\nXsAu8dz368pJhdAncbtd3A9Dkk2W588rufccnp+fLQKBgQD0clba8gJoZsYS1oV4\nvrDC7dysFIL5rJoJgFE1lSMPTQ6+6SyAt3Wmx5/8dd3RXG/77mblJgkDZu3iJB6Z\njFyA/MRlcdjS/Ihc/WVXGthhGmlTUuSfeMd5t/wfCkpZOoKsmmLMng07dDIFPTqW\nE8ly/Vs9yquKWZCPeap+4stcnwKBgQDScwyicftjq5VQyneyTCLQ/WETm6fAUYQf\n2HXkHwS48KpMCUKeQKQwe/ca1DxbXZ2lPwaaaZ2ysxwMO1/RTJtSrhB6hljzoAyF\n/C/+qQ0ouBTCteZekuBQdXwa9NzNwWULwuX9/zBM9EcMQ1HoYxuCtl7fbBJkEpF8\nYJRlQ0Po3wKBgFV+O+RdafwrnbDu+EVvpBC48kn47on2FPWnvD9aRqXOVI7urFLk\nVzCadtjsPEVB6CSbj78rG1HmSOKjsVQQpDW0sdetBqFcEzE6qpvZVr43Z4jt3+nq\naxGmCHauuawVa6iEYnOf/47Ap9HvRTNB/l3KQIQPAwnjI00ax0eTeH6PAoGBAJcY\n/4NKryHaufQtyk77lyvSIHcBlSnh3Sk4Mzy8gJmAQeUh6PDSnJArETn0E/nNdziD\nzevj1NPPAV5O6vbNN9/fFfnCp+8ThKpWbOc83TPVJyK9k09nySI7mAWKtVYNes08\n/ACnzjgSU0ictRxSvBfXdLqZT4MGSeqxNRqXdxSlAoGBAKir7IPvVW7YR11f+UUV\nHhjc98dDBV5eT917eyN1NiIrmK5onMQ3Fz2IF4hePGadBKNI+HoqznK4GddHfxDy\nT9JXTvX/A1K6txy6S806MGiF6zZlPxojKXlbiN/wahgjQD0DxEMAKu/d3VizhJOV\nfAAqhK2WcgB6SamdFN6q445G\n-----END PRIVATE KEY-----\n",
+  "client_email": "isola-551@isola-240018.iam.gserviceaccount.com",
+  "client_id": "101976262033951049791",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/isola-551%40isola-240018.iam.gserviceaccount.com"
+}

@@ -69,7 +69,6 @@ class RegistrationForm extends React.Component {
   };
 
   onSubmit = releaseInfo => {
-    const releaseInfoToString = JSON.stringify(releaseInfo);
     let data = new FormData();
     data.append("Rider's First Name", this.state.firstName);
     data.append("Rider's Last Name", this.state.lastName);
@@ -97,7 +96,7 @@ class RegistrationForm extends React.Component {
     data.append("Insurance Carrier", this.state.insuranceCarrier);
     data.append("Policy Number", this.state.policyNumber);
     data.append("Date/Time Form Submitted", moment());
-    data.append("Release Information", releaseInfoToString);
+    data.append("Release Information", releaseInfo.blob);
 
     const scriptURL =
       "https://script.google.com/macros/s/AKfycbxPNuNc7xHH0_WGXzMFDUvKWXsZp2zrF-_YEYjZu_e0g3sAsAyR/exec";
@@ -327,8 +326,9 @@ class RegistrationForm extends React.Component {
             }}
           >
             <Button onClick={() => this.cancel()}>Cancel</Button>
-
-            <Button onClick={() => this.handleOpen()}>Next</Button>
+            <Button href="https://script.google.com/macros/s/AKfycbysS97mMpocXjT11XDJ5cUqB8EBGagJngeJKoJq4HG0w2bRxW8t/exec">
+              Next
+            </Button>
           </div>
         </Form>
         <Modal

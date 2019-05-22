@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "googleapis": "^40.0.0",
+    "html2canvas": "^1.0.0-rc.1",
+    "jspdf": "^1.5.3",
     "moment": "^2.24.0",
     "netlify-cli": "^2.11.18",
     "prettier": "^1.17.0",
