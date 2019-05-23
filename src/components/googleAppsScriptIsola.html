@@ -169,11 +169,30 @@
         </div>
         <div>
           <input
-            id="signature"
+            id="address"
             type="text"
-            placeholder="Signature of Adult Rider/Parent Guardian"
-            style="padding: 5px; margin: 5px 0 5px 0; width: 95%; font-family: cursive; font-size: 2em"
+            placeholder="Address"
+            style="padding: 5px; margin: 5px 0 5px 0; width: 95%;"
           />
+        </div>
+        <div>
+          <input
+            id="email"
+            type="text"
+            placeholder="email"
+            style="padding: 5px; margin: 5px 0 5px 0; width: 95%;"
+          />
+        </div>
+        <div style="padding: 5px; margin: 5px 0 5px 0; width: 95%;">
+        Signature of Adult Rider/Parent Guardian
+        </div>
+        <div id="sigWrapper" class="wrapper" style="border: solid grey 2px; margin: 10px; overflow: hidden">
+           <canvas id="signature-pad" class="signature-pad" width=4000 height=200></canvas>
+        </div>
+        <button id="clear">Clear</button>
+        <div id="dateText" style="text-align: right; width: 100%;">
+        </div>
+        <div id="requiredFields" style="color: red; font-size: 2em; visibility: hidden;">*Required
         </div>
       </div>
       </div>
@@ -197,6 +216,7 @@
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
 <script>
   function createPDF() {
@@ -215,7 +235,26 @@
   }
 
   function submitForm() {
+    var nameValue = document.getElementById("name").value
+    var parentGuardianValue = document.getElementById("parentGuardian").value
+    var addressValue = document.getElementById("address").value
+    var emailValue = document.getElementById("email").value
+    var sigData = signaturePad.toData()
+
+    console.log(signaturePad.toData())
+
+    if (nameValue === "") {$("#name").css("border-color","red");}else{$("#name").css("border-color","grey")}
+    if (parentGuardianValue === "") {$("#parentGuardian").css("border-color","red");}else{$("#parentGuardian").css("border-color","grey");}
+    if (addressValue === "") {$("#address").css("border-color","red");}else{$("#address").css("border-color","grey");}
+    if (emailValue === "") {$("#email").css("border-color","red");}else{$("#email").css("border-color","grey");}
+    if (sigData.length === 0) {$("#sigWrapper").css("border-color","red");}else{$("#sigWrapper").css("border-color","grey");}
+
+    if (nameValue !== "" && parentGuardianValue !== "" && addressValue !== "" && emailValue !== "" && sigData.length !== 0) {
+    $("#requiredFields").css("visibility","hidden")
     createPDF();
+    } else {
+    $("#requiredFields").css("visibility","visible")
+    }
   }
 
   function uploadComplete(){
@@ -228,9 +267,26 @@
     window.open('https://www.isolastables.com/', '_top')
   }
 
-  document.getElementById("cancel").onclick = function(){redirect()}
+//////
+
+var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+  backgroundColor: 'rgba(255, 255, 255, 0)',
+  penColor: 'rgb(0, 0, 0)',
+});
+
+var cancelButton = document.getElementById('clear');
+cancelButton.addEventListener('click', function (event) {
+signaturePad.clear();
+
+});
+var d = new Date()
+console.log(d)
+document.getElementById("dateText").textContent = d
+document.getElementById("cancel").onclick = function(){redirect()}
 
 </script>
+
+
 
 add second file to project called server.js
 </server>
